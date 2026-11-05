@@ -12,6 +12,7 @@ Fecha de las pruebas locales: 4 de noviembre de 2026.
 | Rama observada | `master` |
 | Rama `main` en el clon | No |
 | Commit de origen | `03bb12fb30cfc8e54c47fda9682c46eab9255180` |
+| Commit local del pipeline | `b886d213d254572df842bf72752f3f32be7ede30` |
 | URL pública del chat desplegado en esta entrega | No existe. No se creó ni se verificó un servicio |
 | URL del workflow en GitHub | No publicada. El archivo local es `.github/workflows/deploy.yml` |
 | Ejecución exitosa | No hubo una ejecución en GitHub Actions |
