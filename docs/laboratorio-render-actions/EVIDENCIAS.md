@@ -1,56 +1,56 @@
 # Evidencias
 
-Fecha de las pruebas locales: 4 de noviembre de 2026.
+Fecha: 4 de noviembre de 2026, hora de Costa Rica.
 
-## Enlaces
+## Entrega
 
-| Dato | Valor real |
+| Dato | Valor |
 |---|---|
-| Repositorio de origen | https://github.com/AlexVillegasC/infosec-unachat-2026 |
-| Propietario del origen | Alex Villegas (`AlexVillegasC`) |
-| ¿La copia local es un fork? | No. `origin` apunta a ese repositorio |
-| Rama observada | `master` |
-| Rama `main` en el clon | No |
-| Commit de origen | `03bb12fb30cfc8e54c47fda9682c46eab9255180` |
-| Commit local del pipeline | `b886d213d254572df842bf72752f3f32be7ede30` |
-| Repositorio de la cuenta | https://github.com/ilovejdg2-lang/infosec-unachat-2026 |
-| Rama por defecto | `master` |
-| URL pública del chat | https://infosec-unachat-2026-b4a9.onrender.com |
-| URL del workflow | https://github.com/ilovejdg2-lang/infosec-unachat-2026/actions/workflows/deploy.yml |
-| Ejecución con pruebas en verde | https://github.com/ilovejdg2-lang/infosec-unachat-2026/actions/runs/41944085248 |
-| Cuenta GitHub | `ilovejdg2-lang` |
+| Repositorio | https://github.com/ilovejdg2-lang/infosec-unachat-2026 |
+| Rama | `master` |
+| Chat público | https://infosec-unachat-2026-b4a9.onrender.com |
+| Workflow modificado | https://github.com/ilovejdg2-lang/infosec-unachat-2026/actions/workflows/deploy.yml |
+| Pruebas exitosas y despliegue | https://github.com/ilovejdg2-lang/infosec-unachat-2026/actions/runs/41947266096 |
+| Prueba fallida y despliegue bloqueado | https://github.com/ilovejdg2-lang/infosec-unachat-2026/actions/runs/41949557909 |
+| Cuenta | `ilovejdg2-lang` |
 
-## Comandos ejecutados
+El historial parte de https://github.com/AlexVillegasC/infosec-unachat-2026, commit `03bb12fb30cfc8e54c47fda9682c46eab9255180`. El remoto `upstream` apunta ahí. `origin` es el repositorio de la cuenta. GitHub no lo muestra como fork.
 
-`npm ci` instaló 505 paquetes.
+## Ejecución con pruebas exitosas
 
-`npm test`: 16 passing.
+Run `41947266096`, commit `424bca9d2994f741410d82ecf6188e33cc7e4984`.
 
-`npm run test:integration`: 1 suite, 7 tests, todas aprobadas.
+- TEST: success
+- DEPLOY: success
+- El paso de despliegue escribió `Respuesta HTTP: 200` y `Commit enviado: 424bca9d2994f741410d82ecf6188e33cc7e4984`
+- Render quedó Live en `424bca9`, disparado por Deploy Hook, duración 37.7 s
 
-`CI=true npm run test:e2e`: 6 passed (53.8s). Playwright levantó el servidor y dos páginas intercambiaron `Ana` / `hola a todos`.
+La ejecución anterior, `41944085248`, tuvo TEST en verde y DEPLOY en rojo porque el secreto todavía no existía. No es la evidencia de despliegue.
 
-En un directorio temporal, `npm ci --omit=dev` instaló 101 paquetes. El proceso escuchó en el puerto 3999, `GET /` respondió 200 y el polling de Socket.IO respondió 200. Después se cerró ese proceso.
+## Ejecución con prueba fallida
 
-## Estado de los trabajos
+Run `41949557909`, commit `8a6120d9dcfa555dbf8d30ff0d50e4786639e8e2`.
 
-| Trabajo | Estado real |
-|---|---|
-| TEST en GitHub Actions | Exitoso en la ejecución 41944085248 |
-| DEPLOY en esa ejecución | Falló porque el secreto todavía no existía. No llamó a Render |
-| Secreto RENDER_DEPLOY_HOOK_URL | Configurado después, sin publicar su valor |
-| Servicio Render | Live. Primer despliegue del commit db78a230f83c4da3c64e1b6ad6d19c704f849044. Node.js 24.22.2. Auto-deploy apagado |
-| Prueba fallida que omite DEPLOY | No demostrada en Actions. El workflow lo expresa con `needs: test` y sin `continue-on-error`, pero eso no sustituye una ejecución |
+- TEST: failure
+- DEPLOY: skipped
+- Mocha reportó 16 pruebas aprobadas y 1 fallida: `pipeline block demonstration` / `fails on purpose so the deploy job is skipped`
+- Render sigue con dos despliegues: el inicial `db78a23` y el Deploy Hook de `424bca9`. No hay despliegue de `8a6120d`
 
-## Dos clientes
+El archivo `test/pipeline-block.test.js` se retira en el commit que guarda esta evidencia, para que `master` no conserve el fallo.
 
-La comunicación de dos clientes quedó verificada en local, no en una URL pública:
+## Dos ventanas del chat público
 
-- Jest conecta dos sockets a un puerto dinámico, entrega el mismo mensaje a ambos y conserva nombre y color.
-- Playwright abre dos contextos, el segundo ve el mensaje del primero, y la suite terminó en verde.
+La URL pública respondió `{"enabled":false}` en `/auth/config`, así que la sala no pidió Auth0.
 
-## Capturas
+Dos pestañas independientes intercambiaron mensajes:
 
-No hay capturas. El navegador automatizado abrió `https://github.com/login` y mostró el formulario de inicio de sesión, sin una sesión que permitiera ver el repositorio, Actions o Render. El control del escritorio de Windows no arrancó (`sidecar_unavailable`). No se generaron imágenes para simular esas pantallas.
+- Ana, color `#5231DC`: «Hola desde la ventana de Ana» y «Ana escribe para Luis»
+- Luis, color `#E37141`: «Luis responde en la otra ventana»
 
-Directorio previsto para capturas reales, cuando exista sesión: `docs/laboratorio-render-actions/evidencias/`.
+La ventana de Ana recibió la respuesta de Luis. La ventana de Luis recibió «Ana escribe para Luis», el mensaje enviado después de que esa pestaña se conectó. Cada mensaje apareció una vez. No hubo aviso de desconexión.
+
+Capturas: `evidencias/ventana-ana.png`, `evidencias/ventana-luis.png`, `evidencias/render-live.png`, `evidencias/render-deploys.png`.
+
+## Pruebas locales previas
+
+Node.js v24.9.0. Mocha 16/16, Jest 7/7 y Playwright 6/6, el 4 de noviembre de 2026, antes de agregar la prueba temporal.

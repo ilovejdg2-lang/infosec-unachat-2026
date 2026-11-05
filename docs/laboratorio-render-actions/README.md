@@ -19,7 +19,7 @@ UNA Chat es un chat en tiempo real. Express entrega `index.html` y Socket.IO rep
 
 El inicio de sesión con Auth0 solo se activa si existen `AUTH0_DOMAIN` y `AUTH0_CLIENT_ID`. Sin esas variables la sala queda abierta, que es el modo en el que corren las pruebas y el arranque local verificado.
 
-La copia de trabajo salió de https://github.com/AlexVillegasC/infosec-unachat-2026, commit `03bb12fb30cfc8e54c47fda9682c46eab9255180`, rama `master`. Esa copia no es un fork: el remoto `origin` apunta al repositorio de Alex Villegas. No existe una rama `main` en el clon. El directorio del laboratorio no era un repositorio hasta que se copió ese historial.
+La copia publicada está en https://github.com/ilovejdg2-lang/infosec-unachat-2026, rama `master`. El historial parte de https://github.com/AlexVillegasC/infosec-unachat-2026, commit `03bb12fb30cfc8e54c47fda9682c46eab9255180`. El remoto `upstream` conserva ese origen y `origin` es el repositorio de la cuenta. GitHub no lo marca como fork. No hay rama `main`.
 
 ## Tecnologías utilizadas
 
@@ -48,7 +48,7 @@ La copia de trabajo salió de https://github.com/AlexVillegasC/infosec-unachat-2
 
 El mismo contrato está en `render.yaml` (`autoDeployTrigger: off`). El servidor ya escuchaba `process.env.PORT` y conserva el puerto 3000 cuando esa variable no existe.
 
-En esta máquina se comprobó el arranque de producción: `npm ci --omit=dev` instaló 101 paquetes y `node server.js` con `PORT=3999` escribió `listening on *:3999`. La ruta `/` respondió 200 con el título del chat y el handshake de Socket.IO respondió 200. No se creó el servicio en una cuenta de Render porque esta sesión no tiene una integración autorizada ni un token de Render.
+El servicio publicado es https://infosec-unachat-2026-b4a9.onrender.com. El primer arranque en Render usó Node.js 24.22.2. En local, `npm ci --omit=dev` instaló 101 paquetes y `PORT=3999` respondió 200 en `/` y en el handshake de Socket.IO.
 
 ## Configuración de GitHub Actions
 
@@ -74,7 +74,7 @@ El workflow anterior, `.github/workflows/una-chat-ci-cd.yml`, desplegaba en cada
 
 ## Explicación del secreto
 
-`RENDER_DEPLOY_HOOK_URL` es la dirección privada que Render muestra en Settings, Deploy Hook. El workflow la lee desde los secretos de Actions. No está escrita en el YAML, en este documento ni en el historial. Quien vea los registros debe ver el valor enmascarado por GitHub. En esta sesión el secreto no pudo crearse: `gh` sigue autenticado con un token inválido de `ilovejdg2-lang` y el navegador automatizado llegó a la pantalla de inicio de sesión, sin una sesión abierta.
+`RENDER_DEPLOY_HOOK_URL` es la dirección privada que Render muestra en Settings, Deploy Hook. El workflow la lee desde los secretos de Actions. No está escrita en el YAML, en este documento ni en el historial. En el registro de la ejecución exitosa GitHub muestra el valor como `***` y el paso imprimió `Respuesta HTTP: 200`.
 
 ## Ejecución de pruebas
 
@@ -90,12 +90,16 @@ Total local: 29 aprobadas y 0 fallidas. La prueba de extremo a extremo incluye d
 
 ## Verificación del despliegue
 
-No hubo un despliegue real. No existe URL pública nueva, ni un servicio en estado Live, ni una ejecución de Actions que se pueda enlazar. Confundir el workflow escrito con un despliegue aceptado sería incorrecto.
+El chat público es https://infosec-unachat-2026-b4a9.onrender.com. La ejecución con pruebas en verde y despliegue aceptado es https://github.com/ilovejdg2-lang/infosec-unachat-2026/actions/runs/41947266096. Render quedó Live en el commit `424bca9`.
+
+La ejecución con una prueba rota es https://github.com/ilovejdg2-lang/infosec-unachat-2026/actions/runs/41949557909. TEST falló y DEPLOY quedó en skipped. Ese commit no aparece entre los despliegues de Render.
+
+Dos ventanas de la URL pública intercambiaron mensajes con los nombres Ana y Luis y colores distintos. El detalle está en `EVIDENCIAS.md`.
 
 ## Resultados obtenidos
 
-Quedó preparado el código, el blueprint de Render y el pipeline. Las pruebas locales pasan con Node.js 24 y el arranque de producción responde en el puerto indicado por el entorno. La publicación en GitHub, el secreto, el servicio de Render y las dos ejecuciones de Actions —la exitosa y la que debe omitir el despliegue— siguen pendientes de una sesión autenticada.
+El servicio está Live, el secreto está guardado fuera del código y el workflow publica solo después de las pruebas. Una falla real de Mocha impidió la solicitud a Render. La prueba temporal no se deja en `master`.
 
 ## Conclusiones
 
-El chat ya puede construirse con `npm ci --omit=dev` y arrancar con `npm start` en el puerto de la plataforma. El pipeline separa la prueba del despliegue y condiciona el segundo al primero. La evidencia de producción queda incompleta hasta crear el Web Service, guardar el Deploy Hook como secreto y publicar `master` en un repositorio donde la cuenta pueda escribir.
+El chat se construye con `npm ci --omit=dev` y arranca con `npm start` en el puerto de la plataforma. El pipeline separa la prueba del despliegue: `needs: test` omite DEPLOY cuando TEST falla, y un pull request no despliega.
