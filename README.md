@@ -32,3 +32,9 @@ npm start
 ```
 
 Abre http://localhost:3000. `npm test` y `npm run test:integration` no deben ver un `.env` con Auth0, o el chat les pedirá token.
+
+## Despliegue
+
+El pipeline está en `.github/workflows/deploy.yml`. Un push a `master` ejecuta las pruebas y, solo si terminan bien, pide a Render el despliegue de ese commit. El identificador viaja en el parámetro `ref` y la dirección del Deploy Hook vive en el secreto `RENDER_DEPLOY_HOOK_URL`. Un pull request ejecuta las pruebas y no despliega.
+
+En Render el servicio es un Web Service de Node, rama `master`, plan Free, auto-deploy apagado, `NODE_VERSION=24`, compilación `npm ci --omit=dev` e inicio `npm start`. El servidor escucha `process.env.PORT`.

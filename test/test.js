@@ -11,6 +11,23 @@ function messageWith(fields) {
 
 describe('unalib', function () {
 
+  describe('invalid input', function () {
+
+    it('should return an empty message when the payload is not a string', function () {
+      expect(JSON.parse(val.validateMessage(null))).to.deep.equal({ mensaje: '' });
+      expect(JSON.parse(val.validateMessage(undefined))).to.deep.equal({ mensaje: '' });
+      expect(JSON.parse(val.validateMessage(15))).to.deep.equal({ mensaje: '' });
+    });
+
+    it('should escape text that is not valid json', function () {
+      var result = JSON.parse(val.validateMessage('<script>alert(1)</script>'));
+
+      expect(result.mensaje).to.not.include('<script>');
+      expect(result.mensaje).to.include('&lt;script&gt;');
+    });
+
+  });
+
   describe('is_valid_phone', function () {
 
     it('should accept a phone number with a dash', function () {

@@ -147,6 +147,36 @@ describe('Chat server', function () {
     });
   });
 
+  describe('when a client sends input the server cannot trust', function () {
+    it('should answer with a safe payload and keep accepting messages', async function () {
+      var sender = await connect(port);
+      var receiver = await connect(port);
+      var received = nextMessage(receiver);
+
+      sender.emit('Evento-Mensaje-Server', { nombre: 'Ana', mensaje: 'roto' });
+
+      var invalid = await received;
+      expect(invalid).toEqual({ mensaje: '' });
+
+      var again = nextMessage(receiver);
+      sender.emit('Evento-Mensaje-Server', 'esto no es json <script>alert(1)</script>');
+      var escaped = await again;
+      expect(escaped.mensaje).not.toContain('<script>');
+      expect(escaped.mensaje).toContain('&lt;script&gt;');
+
+      var healthy = nextMessage(receiver);
+      sender.emit('Evento-Mensaje-Server', JSON.stringify({
+        nombre: 'Luis',
+        mensaje: 'el servidor sigue activo',
+        color: 'rojo'
+      }));
+      var result = await healthy;
+      expect(result.nombre).toBe('Luis');
+      expect(result.mensaje).toBe('el servidor sigue activo');
+      expect(result.color).toBe('#000000');
+    });
+  });
+
   describe('when a user sends a youtube url', function () {
     it('should broadcast an embed iframe', async function () {
       var sender = await connect(port);

@@ -1,0 +1,3 @@
+No hay capturas en esta entrega.
+
+El navegador automatizado solo alcanzó la pantalla de inicio de sesión de GitHub. El control del escritorio no estuvo disponible. No se crearon imágenes de un servicio, de un workflow ni de un chat público que no se llegaron a abrir.

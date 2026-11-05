@@ -16,12 +16,16 @@
   "overrides": {
     "proxy-addr": "2.0.8"
   },
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "start": "node server.js",
     "test": "mocha --ui bdd",
-    "test:integration": "jest",
+    "test:integration": "jest --runInBand",
     "test:e2e": "playwright test",
-    "test:e2e:headed": "playwright test --headed"
+    "test:e2e:headed": "playwright test --headed",
+    "test:ci": "npm test && npm run test:integration && npm run test:e2e"
   },
   "jest": {
     "testEnvironment": "node",

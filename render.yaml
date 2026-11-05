@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: una-chat
+    runtime: node
+    plan: free
+    branch: master
+    autoDeployTrigger: off
+    buildCommand: npm ci --omit=dev
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
