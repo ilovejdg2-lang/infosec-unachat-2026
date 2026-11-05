@@ -10,7 +10,7 @@ Fecha: 4 de noviembre de 2026.
 | Secreto | COMPLETADO | `RENDER_DEPLOY_HOOK_URL` existe en Actions. El registro lo muestra enmascarado. El valor no está en el repositorio |
 | Workflow modificado | COMPLETADO | `.github/workflows/deploy.yml`, nombre «Desplegar chat en Render». `DEPLOY` tiene `needs: test` y no usa `continue-on-error` |
 | Pruebas antes del despliegue | COMPLETADO | TEST ejecuta `npm test`, `npm run test:integration` y `npm run test:e2e` con Node.js 24 |
-| Ejecución exitosa y despliegue | COMPLETADO | https://github.com/ilovejdg2-lang/infosec-unachat-2026/actions/runs/41947266096. Render Live en `424bca9`, HTTP 200 |
+| Ejecución exitosa y despliegue | COMPLETADO | https://github.com/ilovejdg2-lang/infosec-unachat-2026/actions/runs/41947266096. Render publicó `424bca9`, HTTP 200. La restauración posterior `af26cb2` también se publicó: https://github.com/ilovejdg2-lang/infosec-unachat-2026/actions/runs/41951404968 |
 | Prueba fallida y despliegue bloqueado | COMPLETADO | https://github.com/ilovejdg2-lang/infosec-unachat-2026/actions/runs/41949557909. TEST failure, DEPLOY skipped |
 | Chat público con dos ventanas | COMPLETADO | https://infosec-unachat-2026-b4a9.onrender.com. Ana y Luis se vieron con colores distintos |
 | Secreto fuera del código | COMPLETADO | No hay URL de Deploy Hook en YAML, documentos ni capturas |

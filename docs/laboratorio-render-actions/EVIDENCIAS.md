@@ -23,7 +23,9 @@ Run `41947266096`, commit `424bca9d2994f741410d82ecf6188e33cc7e4984`.
 - TEST: success
 - DEPLOY: success
 - El paso de despliegue escribió `Respuesta HTTP: 200` y `Commit enviado: 424bca9d2994f741410d82ecf6188e33cc7e4984`
-- Render quedó Live en `424bca9`, disparado por Deploy Hook, duración 37.7 s
+- Render publicó `424bca9` por Deploy Hook, duración 37.7 s, y ese commit quedó Live
+
+La ejecución que retira la prueba temporal es https://github.com/ilovejdg2-lang/infosec-unachat-2026/actions/runs/41951404968, commit `af26cb2436dd085921a4874552c55a48b9d71eb4`. TEST y DEPLOY terminaron en success, la respuesta fue HTTP 200 y Render publicó `af26cb2` por Deploy Hook. `8a6120d` sigue sin aparecer en la lista de despliegues.
 
 La ejecución anterior, `41944085248`, tuvo TEST en verde y DEPLOY en rojo porque el secreto todavía no existía. No es la evidencia de despliegue.
 
