@@ -13,12 +13,12 @@ Fecha de las pruebas locales: 4 de noviembre de 2026.
 | Rama `main` en el clon | No |
 | Commit de origen | `03bb12fb30cfc8e54c47fda9682c46eab9255180` |
 | Commit local del pipeline | `b886d213d254572df842bf72752f3f32be7ede30` |
-| URL pública del chat desplegado en esta entrega | No existe. No se creó ni se verificó un servicio |
-| URL del workflow en GitHub | No publicada. El archivo local es `.github/workflows/deploy.yml` |
-| Ejecución exitosa | No hubo una ejecución en GitHub Actions |
-| Ejecución fallida | No hubo una ejecución en GitHub Actions |
-| Cuenta GitHub detectada | `ilovejdg2-lang` |
-| Repositorio del estudiante para este chat | No existe uno público. `lab6-paradigma` es otro proyecto y no se modificó |
+| Repositorio de la cuenta | https://github.com/ilovejdg2-lang/infosec-unachat-2026 |
+| Rama por defecto | `master` |
+| URL pública del chat | https://infosec-unachat-2026-b4a9.onrender.com |
+| URL del workflow | https://github.com/ilovejdg2-lang/infosec-unachat-2026/actions/workflows/deploy.yml |
+| Ejecución con pruebas en verde | https://github.com/ilovejdg2-lang/infosec-unachat-2026/actions/runs/41944085248 |
+| Cuenta GitHub | `ilovejdg2-lang` |
 
 ## Comandos ejecutados
 
@@ -36,10 +36,10 @@ En un directorio temporal, `npm ci --omit=dev` instaló 101 paquetes. El proceso
 
 | Trabajo | Estado real |
 |---|---|
-| TEST en GitHub Actions | No ejecutado |
-| DEPLOY en GitHub Actions | No ejecutado |
-| Deploy Hook | No llamado. No hay URL y no se inventó una |
-| Servicio Render | No creado en esta sesión |
+| TEST en GitHub Actions | Exitoso en la ejecución 41944085248 |
+| DEPLOY en esa ejecución | Falló porque el secreto todavía no existía. No llamó a Render |
+| Secreto RENDER_DEPLOY_HOOK_URL | Configurado después, sin publicar su valor |
+| Servicio Render | Live. Primer despliegue del commit db78a230f83c4da3c64e1b6ad6d19c704f849044. Node.js 24.22.2. Auto-deploy apagado |
 | Prueba fallida que omite DEPLOY | No demostrada en Actions. El workflow lo expresa con `needs: test` y sin `continue-on-error`, pero eso no sustituye una ejecución |
 
 ## Dos clientes
